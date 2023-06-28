@@ -11,7 +11,6 @@
     display: flex;
     justify-content: center;
     height: 100vh;
-    
 }
 
 .text_epitet{
@@ -65,32 +64,30 @@ background: #D9D9D9;
 .show {
     opacity: 1;
   }
+
   
-/* .epitets-container {
+  .epitets-container {
     display: flex;
-    flex-direction: column;
+    position: absolute;
+    top: 500px;
+    right: 400px auto 300vh;
+    left: 400px auto 300vh;
+    padding-left: 300px;
+    padding-right: 300px;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    position: absolute;
-    top: 300px;
-    left: 600px;
-    flex-wrap: wrap;
-
   }
-
-
+  
   .epitets-container p {
-еееееее
     margin: 5px;
-    padding: 15px 15px;
+    padding: 12px 12px;
     background-color: #D9D9D9;
-    border-radius: 0;
-    font-size: 15px;
+    border-radius: 0px;
+    font-size: 16px;
     color: #888;
     text-transform: uppercase;
+    border: solid black;
+    border-width: 2px;
   }
-
-
-  
   

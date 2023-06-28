@@ -1,4 +1,5 @@
-'use client';
+'use client'
+
 
 import React, { useEffect, useState } from 'react';
 import styles from './page.css';
@@ -8,6 +9,7 @@ function Page() {
   const [show, setShow] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [responseEpitets, setResponseEpitets] = useState([]);
+  const [isLoading, setIsLoading] = useState(false); // Состояние загрузки
 
   const toggleInput = () => {
     setShow(!show);
@@ -18,18 +20,38 @@ function Page() {
   };
 
   const handleSubmit = () => {
-    axios.post('http://localhost:8000/message', {
-      message: inputValue
-    })
-      .then(response => {
+    setIsLoading(true); // Установка состояния загрузки при отправке запроса
+    axios
+      .post('http://localhost:8000/message', {
+        message: inputValue
+      })
+      .then((response) => {
         console.log(response.data);
         setResponseEpitets(response.data.messages);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false); // Сброс состояния загрузки после получения ответа или ошибки
       });
   };
-  
+
+  const handleClick = (epitet) => {
+    axios
+      .post('http://localhost:8000/generate', {
+        prompt: inputValue,
+        epitet: epitet
+      })
+      .then((response) => {
+        console.log(response.data);
+        // Handle the generated sentences here
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+  };
+
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       handleSubmit();
@@ -42,16 +64,26 @@ function Page() {
         <div className='text_epitet'>
           <p id='p_epitet' onClick={toggleInput}>EPITET</p>
         </div>
-
         <div className={`search ${show ? 'show' : 'hide'}`}>
-          <input onChange={handleInputChange}  onKeyPress={handleKeyPress}  placeholder='Введите слово' className='input' type="text" />
+          <input
+            onChange={handleInputChange}
+            onKeyPress={handleKeyPress}
+            placeholder='Введите слово'
+            className='input'
+            type='text'
+          />
         </div>
-      </div>
-
-      <div className="epitets-container">
-        {responseEpitets.map((epitet, index) => (
-          <p key={index}>{epitet}</p>
-        ))}
+        <div className='epitets-container'>
+          {isLoading ? (
+            <p>Загрузка...</p> // Отображение сообщения о загрузке во время выполнения запроса
+          ) : (
+            responseEpitets.map((epitet, index) => (
+              <p key={index} onClick={() => handleClick(epitet)}>
+                {epitet}
+              </p>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
