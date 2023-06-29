@@ -1,6 +1,5 @@
 'use client'
 
-
 import React, { useEffect, useState } from 'react';
 import styles from './page.css';
 import axios from 'axios';
@@ -10,6 +9,8 @@ function Page() {
   const [inputValue, setInputValue] = useState('');
   const [responseEpitets, setResponseEpitets] = useState([]);
   const [isLoading, setIsLoading] = useState(false); // Состояние загрузки
+  const [sentences, setSentences] = useState([]);
+  const [visibleSentence, setVisiibleSentence] = useState(true);
 
   const toggleInput = () => {
     setShow(!show);
@@ -27,7 +28,7 @@ function Page() {
       })
       .then((response) => {
         console.log(response.data);
-        setResponseEpitets(response.data.messages);
+        setResponseEpitets(response.data.epithets); // Updated response key to "epithets"
       })
       .catch((error) => {
         console.error(error);
@@ -45,6 +46,8 @@ function Page() {
       })
       .then((response) => {
         console.log(response.data);
+        setSentences(response.data.sentences);
+        console.log(sentences);
         // Handle the generated sentences here
       })
       .catch((error) => {
@@ -58,8 +61,12 @@ function Page() {
     }
   };
 
+  const handleSentenceClick = () => {
+    setVisiibleSentence(false);
+  }
+
   return (
-    <div>
+    <div className='body'>
       <div className='container'>
         <div className='text_epitet'>
           <p id='p_epitet' onClick={toggleInput}>EPITET</p>
@@ -75,15 +82,22 @@ function Page() {
         </div>
         <div className='epitets-container'>
           {isLoading ? (
-            <p>Загрузка...</p> // Отображение сообщения о загрузке во время выполнения запроса
+            <p>Загрузка...</p>
           ) : (
             responseEpitets.map((epitet, index) => (
-              <p key={index} onClick={() => handleClick(epitet)}>
-                {epitet}
-              </p>
+              <div className="wrapper">
+                <p key={index} onClick={() => handleClick(epitet)}>
+                  {epitet}
+                </p>
+              </div>
             ))
           )}
         </div>
+      </div>
+      <div className="sentences">
+        {visibleSentence && sentences.map((sentence, index) => (
+          <p key={index} onClick={handleSentenceClick}>{sentence}</p>
+        ))}
       </div>
     </div>
   );
