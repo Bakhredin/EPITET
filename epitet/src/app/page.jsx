@@ -7,22 +7,7 @@ import axios from 'axios';
 function Page() {
   const [show, setShow] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const [responseEpitets, setResponseEpitets] = useState([]);
-  const [isLoading, setIsLoading] = useState(false); // Состояние загрузки
-  const [sentences, setSentences] = useState([]);
-  const [visibleSentence, setVisiibleSentence] = useState(true);
-
-  const toggleInput = () => {
-    setShow(!show);
-  };
-
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
-  const handleSubmit = () => {
-    setIsLoading(true); // Установка состояния загрузки при отправке запроса
-    axios
+  cons
       .post('http://localhost:8000/message', {
         message: inputValue
       })
