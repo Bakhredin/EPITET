@@ -11,6 +11,7 @@ function Page() {
   const [isLoading, setIsLoading] = useState(false); // Состояние загрузки
   const [sentences, setSentences] = useState([]);
   const [visibleSentence, setVisiibleSentence] = useState(true);
+  const [activeEpitet, setActiveEpitet] = useState(null);
 
   const toggleInput = () => {
     setShow(!show);
@@ -39,6 +40,7 @@ function Page() {
   };
 
   const handleClick = (epitet) => {
+    setActiveEpitet(epitet); // Установка активного эпитета при клике
     axios
       .post('http://localhost:8000/generate', {
         prompt: inputValue,
@@ -47,8 +49,6 @@ function Page() {
       .then((response) => {
         console.log(response.data);
         setSentences(response.data.sentences);
-        console.log(sentences);
-        // Handle the generated sentences here
       })
       .catch((error) => {
         console.error(error);
@@ -84,13 +84,17 @@ function Page() {
           {isLoading ? (
             <p>Загрузка...</p>
           ) : (
-            responseEpitets.map((epitet, index) => (
-              <div className="wrapper">
-                <p key={index} onClick={() => handleClick(epitet)}>
-                  {epitet}
-                </p>
-              </div>
-            ))
+            <div className="epitet-list">
+              {responseEpitets.map((epitet, index) => (
+                <div
+                  className={`epitet-item ${activeEpitet === epitet ? 'active' : ''}`}
+                  key={index}
+                  onClick={() => handleClick(epitet)}
+                >
+                  <p>{epitet}</p>
+                </div>
+              ))}
+            </div>
           )}
         </div>
       </div>
@@ -101,6 +105,8 @@ function Page() {
       </div>
     </div>
   );
+  
+
 }
 
 export default Page;
