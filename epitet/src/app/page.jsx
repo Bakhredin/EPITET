@@ -1,17 +1,16 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
-import styles from './page.css';
+import React, { useState } from 'react';
 import axios from 'axios';
+import './page.css';
+import Modal from './components/modal/Modal.jsx'
 
 function Page() {
   const [show, setShow] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const [responseEpitets, setResponseEpitets] = useState([]);
-  const [isLoading, setIsLoading] = useState(false); // Состояние загрузки
+  const [isLoading, setIsLoading] = useState(false);
+  const [epithetsData, setEpithetsData] = useState([]);
   const [sentences, setSentences] = useState([]);
-  const [visibleSentence, setVisiibleSentence] = useState(true);
-  const [activeEpitet, setActiveEpitet] = useState(null);
 
   const toggleInput = () => {
     setShow(!show);
@@ -22,29 +21,43 @@ function Page() {
   };
 
   const handleSubmit = () => {
-    setIsLoading(true); // Установка состояния загрузки при отправке запроса
+    setIsLoading(true);
     axios
       .post('http://localhost:8000/message', {
         message: inputValue
       })
       .then((response) => {
         console.log(response.data);
-        setResponseEpitets(response.data.epithets); // Updated response key to "epithets"
+        const updatedEpithetsData = response.data.epithets.map((epitet) => ({
+          epitet,
+          isActive: false
+        }));
+        setEpithetsData(updatedEpithetsData);
       })
       .catch((error) => {
         console.error(error);
       })
       .finally(() => {
-        setIsLoading(false); // Сброс состояния загрузки после получения ответа или ошибки
+        setIsLoading(false);
       });
   };
 
-  const handleClick = (epitet) => {
-    setActiveEpitet(epitet); // Установка активного эпитета при клике
+  const handleClick = (index) => {
+    const selectedElement = epithetsData[index];
+
+    const updatedEpithetsData = epithetsData.map((epitetData, i) => ({
+      ...epitetData,
+      isActive: i === index,
+    }));
+
+    setEpithetsData(updatedEpithetsData);
+
+    console.log(`Эпитет ${selectedElement.epitet} превращен в контейнер`);
+
     axios
       .post('http://localhost:8000/generate', {
         prompt: inputValue,
-        epitet: epitet
+        epitet: selectedElement.epitet,
       })
       .then((response) => {
         console.log(response.data);
@@ -52,18 +65,15 @@ function Page() {
       })
       .catch((error) => {
         console.error(error);
-      })
+      });
   };
+
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       handleSubmit();
     }
   };
-
-  const handleSentenceClick = () => {
-    setVisiibleSentence(false);
-  }
 
   return (
     <div className='body'>
@@ -85,28 +95,32 @@ function Page() {
             <p>Загрузка...</p>
           ) : (
             <div className="epitet-list">
-              {responseEpitets.map((epitet, index) => (
+              {epithetsData.map((epitetData, index) => (
                 <div
-                  className={`epitet-item ${activeEpitet === epitet ? 'active' : ''}`}
+                  className={`epitet-item ${epitetData.isActive ? 'active' : ''}`}
                   key={index}
-                  onClick={() => handleClick(epitet)}
+                  onClick={() => handleClick(index)}
                 >
-                  <p>{epitet}</p>
+                  {epitetData.isActive ? (
+                    <div
+                      className="epitet-container active"
+                      style={{ backgroundColor: epitetData.color }}
+                    >
+                      <p>{epitetData.epitet}</p>
+                    </div>
+                  ) : (
+                    <p>{epitetData.epitet}</p>
+                  )}
                 </div>
               ))}
+
             </div>
           )}
         </div>
       </div>
-      <div className="sentences">
-        {visibleSentence && sentences.map((sentence, index) => (
-          <p key={index} onClick={handleSentenceClick}>{sentence}</p>
-        ))}
-      </div>
+      <Modal />
     </div>
   );
-  
-
-}
+};
 
 export default Page;

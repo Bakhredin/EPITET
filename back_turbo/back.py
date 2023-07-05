@@ -35,7 +35,7 @@ async def process_message(request: MessageRequest):
     prompt = request.message.split()[0]
     print(prompt)
     if prompt == "Жантик":
-        prompt = "Лох"
+        prompt = "Бабник"
         print("О, тупой")
 
     openai_messages = [

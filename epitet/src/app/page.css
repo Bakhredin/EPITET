@@ -114,6 +114,11 @@
     border-width: 2px;
   }
   
+  .epitets-container div.active {
+    background-color: rgba(98, 255, 0, 0.35); /* Установите желаемый цвет фона для активного эпитета */
+    color: #ffffff; /* Установите желаемый цвет текста для активного эпитета */
+  }
+  
   .sentences {
     margin-top: 20px; /* Add some top margin to create spacing */
   }
@@ -124,8 +129,4 @@
 
   .button{
     border: solid black;
-  }
-
-  .epitet-item.active {
-    background-color: rgba(98, 255, 0, 0.35);; /* Цвет активного эпитета */
   }
