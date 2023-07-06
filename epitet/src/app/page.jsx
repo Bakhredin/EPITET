@@ -11,6 +11,13 @@ function Page() {
   const [isLoading, setIsLoading] = useState(false);
   const [epithetsData, setEpithetsData] = useState([]);
   const [sentences, setSentences] = useState([]);
+  const [selectedContainerIndex, setSelectedContainerIndex] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const openModal = () => {
+    setModalVisible(true);
+  }
+
 
   const toggleInput = () => {
     setShow(!show);
@@ -54,18 +61,8 @@ function Page() {
 
     console.log(`Эпитет ${selectedElement.epitet} превращен в контейнер`);
 
-    axios
-      .post('http://localhost:8000/generate', {
-        prompt: inputValue,
-        epitet: selectedElement.epitet,
-      })
-      .then((response) => {
-        console.log(response.data);
-        setSentences(response.data.sentences);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    setSelectedContainerIndex(index);
+    openModal();
   };
 
 
@@ -97,7 +94,7 @@ function Page() {
             <div className="epitet-list">
               {epithetsData.map((epitetData, index) => (
                 <div
-                  className={`epitet-item ${epitetData.isActive ? 'active' : ''}`}
+                  className={`epitet-item ${selectedContainerIndex === index ? 'active' : ''}`}
                   key={index}
                   onClick={() => handleClick(index)}
                 >
@@ -118,7 +115,11 @@ function Page() {
           )}
         </div>
       </div>
-      <Modal />
+      <Modal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        selectedContainerIndex={selectedContainerIndex}
+        inputValue={inputValue} />
     </div>
   );
 };
