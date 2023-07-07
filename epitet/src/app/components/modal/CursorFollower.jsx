@@ -26,11 +26,11 @@ const CursorFollower = () => {
 
     const updateFollowerPosition = () => {
       setFollowerPosition((prevPosition) => {
-        const lerpAmount = 0.2; // Adjust the lerp amount for desired responsiveness
+        const lerpAmount = 0.2; 
         const x = lerp(prevPosition.x, position.x, lerpAmount);
         const y = lerp(prevPosition.y, position.y, lerpAmount);
 
-        // Calculate rotation angle based on cursor position
+        
         const dx = x - prevPosition.x;
         const dy = y - prevPosition.y;
         const newRotation = Math.atan2(dy, dx) * (180 / Math.PI);

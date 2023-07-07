@@ -5,7 +5,7 @@ import axios from 'axios';
 import './page.css';
 import Modal from './components/modal/Modal.jsx'
 import CursorFollower from './components/modal/CursorFollower.jsx';
-
+import Switch_joke from './components/modal/Switch_joke'
 
 function Page() {
   const [show, setShow] = useState(false);
@@ -75,6 +75,7 @@ function Page() {
 
   return (
     <div className='body'>
+      <Switch_joke/>
        <CursorFollower />
       <div className='container'>
         <div className='text_epitet'>
