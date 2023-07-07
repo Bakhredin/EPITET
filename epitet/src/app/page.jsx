@@ -4,13 +4,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './page.css';
 import Modal from './components/modal/Modal.jsx'
+import CursorFollower from './components/modal/CursorFollower.jsx';
+
 
 function Page() {
   const [show, setShow] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [epithetsData, setEpithetsData] = useState([]);
-  const [sentences, setSentences] = useState([]);
   const [selectedContainerIndex, setSelectedContainerIndex] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -74,6 +75,7 @@ function Page() {
 
   return (
     <div className='body'>
+       <CursorFollower />
       <div className='container'>
         <div className='text_epitet'>
           <p id='p_epitet' onClick={toggleInput}>EPITET</p>

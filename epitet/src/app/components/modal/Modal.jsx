@@ -1,35 +1,36 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from 'axios';
 import './modal.css';
 
 function Modal({ visible, onClose, selectedContainerIndex, inputValue }) {
   const modalRef = useRef(null);
+  const [sentences, setSentences] = useState([]);
+
+  const handleCreateSentence = async () => {
+    const prompt = inputValue;
+    const epitet = document.getElementsByClassName('epitet-item')[selectedContainerIndex].textContent;
+
+    try {
+      const response = await axios.post('http://localhost:8000/generate', {
+        prompt: inputValue,
+        epitet: epitet
+      });
+      setSentences(response.data.sentences);
+      console.log(response.data.sentences);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     if (visible) {
       positionModal();
+      handleCreateSentence();
     }
-  }, [visible]);
+  }, [visible, selectedContainerIndex, inputValue]);
 
   const handleModalClose = () => {
     onClose();
-  };
-
-  const handleCreateSentence = () => {
-    const prompt = inputValue;
-    const epitet = document.getElementsByClassName('epitet-item')[selectedContainerIndex].textContent;
-
-    axios.post('http://localhost:8000/generate', {
-      prompt: inputValue,
-      epitet: epitet
-    })
-      .then((response) => {
-        const sentences = response.data.sentences;
-        //здесь потом можно поиграться !!!!
-      })
-      .catch((error) => {
-        console.error(error);
-      });
   };
 
   const positionModal = () => {
@@ -50,20 +51,17 @@ function Modal({ visible, onClose, selectedContainerIndex, inputValue }) {
       {selectedContainerIndex !== null && (
         <div className="modal-content">
           <div className="create">
-            <button className="create_button" onClick={handleCreateSentence}>
-              СОЗДАТЬ ПРЕДЛОЖЕНИЕ
+            <button className="create_button">
+            {sentences.map((sentence, index) => <p key={index}>{sentence}</p>)}
             </button>
           </div>
 
-
           <div className="meaning">
-            <button className="epitets_button">ОПИСАТЬ ЭПИТЕТ</button>
+            <button onClick={handleCreateSentence} className="epitets_button">новое предложение</button>
           </div>
-
-          {/* Например, если у вас есть sentences, вы можете отобразить их в модальном окне: */}
-          {/* {sentences.map((sentence, index) => <p key={index}>{sentence}</p>)} */}
         </div>
       )}
+
       <div className="modal-actions">
         <button className="x" onClick={handleModalClose}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -75,7 +73,6 @@ function Modal({ visible, onClose, selectedContainerIndex, inputValue }) {
         </button>
       </div>
     </div>
-
   );
 }
 
