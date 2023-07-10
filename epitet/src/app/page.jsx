@@ -14,6 +14,8 @@ function Page() {
   const [epithetsData, setEpithetsData] = useState([]);
   const [selectedContainerIndex, setSelectedContainerIndex] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [isLampOn, setIsLampOn] = useState(false);
+
 
   const openModal = () => {
     setModalVisible(true);
@@ -75,8 +77,10 @@ function Page() {
 
   return (
     <div className='body'>
-      <Switch_joke/>
-       <CursorFollower />
+      <Switch_joke
+      lamp={isLampOn}
+      />
+       <CursorFollower/>
       <div className='container'>
         <div className='text_epitet'>
           <p id='p_epitet' onClick={toggleInput}>EPITET</p>

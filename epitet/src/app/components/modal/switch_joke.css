@@ -99,3 +99,13 @@ input[value="on"]:checked ~ .lamp:before {
              0px 8px 80px rgba(255,255,255,0.6),
              0px 8px 120px rgba(255,255,255,0.6);
 }
+
+.lamp-on {
+  /* Цвет страницы при включенной лампе */
+  background-color: #211c1c;
+}
+
+.lamp-on-input{
+  background-color: aqua;
+}
+

@@ -30,7 +30,7 @@ const CursorFollower = () => {
         const x = lerp(prevPosition.x, position.x, lerpAmount);
         const y = lerp(prevPosition.y, position.y, lerpAmount);
 
-        
+
         const dx = x - prevPosition.x;
         const dy = y - prevPosition.y;
         const newRotation = Math.atan2(dy, dx) * (180 / Math.PI);
