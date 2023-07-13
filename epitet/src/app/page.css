@@ -1,107 +1,173 @@
-/* display: flex;
-  justify-content: center;
- 
- 
-  height: 100vh; */
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
- 
-.body{
+.body.false{
   background-color: rgba(221, 255, 224, 0.32);
 }
- 
+
+.body.true{
+  background-color: rgb(38,37,44);
+}
+
 .container {
-    display: flex;
-    justify-content: center;
-    height: 100vh;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
 }
 
-.text_epitet{
-    display: flex;
-    width: 447px;
-    height: 127px;
-    margin: 233px auto 0;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 128px;
-    line-height: 155px;
-    color: #000000;
-    backdrop-filter: blur(2px);
+.text_epitet.false {
+  display: flex;
+  width: 447px;
+  height: 127px;
+  margin: 233px auto 0;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 128px;
+  line-height: 155px;
+  color: #000000;
+  backdrop-filter: blur(2px);
 }
 
-.search{
-    position: absolute;
-    width: 577px;
-    height: 45px;
-    top: 400px;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 1;
-    transition: opacity 0.3s ease;
-    background: #D9D9D9;
+.text_epitet.true {
+  display: flex;
+  width: 447px;
+  height: 127px;
+  margin: 233px auto 0;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 128px;
+  line-height: 155px;
+  color: #ffffff;
+  backdrop-filter: blur(2px);
 }
 
-#p_epitet{
-    cursor: pointer;
+.search {
+  position: absolute;
+  width: 577px;
+  height: 45px;
+  top: 400px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  background: #D9D9D9;
 }
 
-.input{
-    display: flex;
-    /* background-color: #D9D9D9; */
-    background: rgba(98, 255, 0, 0.35);
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    width: 577px;
-    height: 45px;
-    border: 1px solid #000;
-    font-size: x-large;
-    font-family: 'Comfortaa', cursive;
-    text-align: center
-    
+#p_epitet {
+  cursor: pointer;
 }
+
+
+.input.false {
+  display: flex;
+  /* background-color: #D9D9D9; */
+  background: rgba(98, 255, 0, 0.35);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  width: 577px;
+  height: 45px;
+  border: 1px solid #000;
+  font-size: x-large;
+  font-family: 'Comfortaa', cursive;
+  text-align: center
+}
+
+.input.true {
+  display: flex;
+  /* background-color: #D9D9D9; */
+  background: rgba(204, 0, 255, 0.50);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  width: 577px;
+  height: 45px;
+  border: 1px solid #000;
+  font-size: x-large;
+  font-family: 'Comfortaa', cursive;
+  text-align: center
+}
+
 
 .hide {
-    opacity: 0;
-    pointer-events: none; /* Чтобы скрыть input и отключить взаимодействие с ним */
-  }
+  opacity: 1;
+  /* Чтобы скрыть input и отключить взаимодействие с ним */
+}
 
 .show {
-    opacity: 1;
-  }
+  opacity: 1;
+}
 
-  
-  .epitets-container {
-    display: flex;
-    position: absolute;
-    top: 500px;
-    right: 400px auto 300vh;
-    left: 400px auto 300vh;
-    padding-left: 300px;
-    padding-right: 300px;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .epitets-container p {
-    margin: 5px;
-    padding: 12px 12px;
-    background-color: #D9D9D9;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    border-radius: 0px;
-    font-size: 16px;
-    color: #888;
-    text-transform: uppercase;
-    border: 1px solid #000;
-    border-width: 2px;
-  }
-  
-  .sentences {
-    margin-top: 20px; /* Add some top margin to create spacing */
-  }
-  
-  .sentences p {
-    margin-bottom: 10px; /* Add bottom margin to separate each sentence */
-  }
+.epitets-container {
+  display: flex;
+  position: absolute;
+  top: 500px;
+  right: 400px auto 300vh;
+  left: 400px auto 300vh;
+  padding-left: 300px;
+  padding-right: 300px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
 
-  .button{
-    border: solid black;
-  }
+.epitet-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.epitets-container.false p {
+  margin: 5px;
+  padding: 12px 12px;
+  background-color:  #D9D9D9;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 0px;
+  font-size: 16px;
+  color: #888;
+  text-transform: uppercase;
+  border: 1px solid #000;
+  border-width: 2px;
+}
+
+.epitets-container.true p {
+  margin: 5px;
+  padding: 12px 12px;
+  background-color:  rgba(0, 0, 0, 0.25);;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 0px;
+  font-size: 16px;
+  color: #888;
+  text-transform: uppercase;
+  border: 1px solid #000;
+  border-width: 2px;
+}
+
+.epitets-container p:hover {
+  background-color: #c3bfbf;
+  color: #888;
+  transition: background-color 0.3s ease;
+}
+
+.epitets-container.false div.active {
+  background-color: rgba(98, 255, 0, 0.35);
+  /* Установите желаемый цвет фона для активного эпитета */
+  color: #ffffff;
+  /* Установите желаемый цвет текста для активного эпитета */
+}
+
+.epitets-container.true div.active {
+  background-color: rgba(204, 0, 255, 0.50);
+  /* Установите желаемый цвет фона для активного эпитета */
+  color: #ffffff;
+  /* Установите желаемый цвет текста для активного эпитета */
+}
+
+.sentences {
+  margin-top: 20px;
+  /* Add some top margin to create spacing */
+}
+
+.sentences p {
+  margin-bottom: 10px;
+  /* Add bottom margin to separate each sentence */
+}
+
+.button {
+  border: solid black;
+}
+
