@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from 'axios';
 import './modal.css';
 
-function Modal({ visible, onClose, selectedContainerIndex, inputValue }) {
+function Modal({ visible, onClose, selectedContainerIndex, inputValue, isLampOn }) {
   const modalRef = useRef(null);
   const [sentences, setSentences] = useState([]);
 
@@ -47,17 +47,17 @@ function Modal({ visible, onClose, selectedContainerIndex, inputValue }) {
   };
 
   return (
-    <div ref={modalRef} className={`modal ${visible ? 'show' : 'hide'}`}>
+    <div ref={modalRef} className={`modal ${visible ? 'show' : 'hide'} ${isLampOn ? 'true' : 'false'}` }>
       {selectedContainerIndex !== null && (
         <div className="modal-content">
           <div className="create">
-            <button className="create_button">
+            <button className={`create_button ${isLampOn ? 'true' : 'false'}`}>
             {sentences.map((sentence, index) => <p key={index}>{sentence}</p>)}
             </button>
           </div>
 
           <div className="meaning">
-            <button onClick={handleCreateSentence} className="epitets_button">новое предложение</button>
+            <button onClick={handleCreateSentence} className={`epitets_button ${isLampOn ? 'true' : 'false'}`}>новое предложение</button>
           </div>
         </div>
       )}

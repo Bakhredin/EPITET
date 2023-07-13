@@ -1,22 +1,25 @@
 import React, { useState } from "react";
 import './switch_joke.css';
 
-function Switch_joke({ lamp }) {
-  const [isOn, setIsOn] = useState(lamp);
+function Switch_joke({ isLampOn, setIsLampOn }) {
 
   const handleSwitchChange = () => {
-    const newIsOn = !isOn;
-    setIsOn(newIsOn);
+    const newIsOn = !isLampOn;
+    setIsLampOn(newIsOn);
+    console.log(isLampOn);
   };
 
   return (
-    <div id="lamp" className={isOn ? "lamp-on" : ""}>
+    <div id="lamp" className={isLampOn ? "lamp-on" : ""}>
+
+      <input type="checkbox" id="switch" name="switch" />
+      <label for="switch" class="switch"></label>
       <input
         type="radio"
         id="switch-on"
         name="switch"
         value="on"
-        checked={isOn}
+        checked={isLampOn}
         onChange={handleSwitchChange}
       />
       <input
@@ -24,11 +27,11 @@ function Switch_joke({ lamp }) {
         id="switch-off"
         name="switch"
         value="off"
-        checked={!isOn}
+        checked={!isLampOn}
         onChange={handleSwitchChange}
       />
-      <label htmlFor="switch-on" className={`entypo-lamp ${isOn ? 'on' : 'off'}`}></label>
-      <div className={`lamp ${isOn ? 'on' : 'off'}`}>
+      <label htmlFor="switch-on" className={`entypo-lamp ${isLampOn ? 'on' : 'off'}`}></label>
+      <div className={`lamp ${isLampOn ? 'on' : 'off'}`}>
         <div className="gonna-give-light"></div>
       </div>
 

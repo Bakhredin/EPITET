@@ -34,9 +34,9 @@ class GenerateRequest(BaseModel):
 async def process_message(request: MessageRequest):
     prompt = request.message.split()[0]
     print(prompt)
-    if prompt == "Жантик":
-        prompt = "Бабник"
-        print("О, тупой")
+    if prompt == "Бахредин":
+        prompt = "тупой"
+        print("О, Бахрединтупой")
 
     openai_messages = [
         {
@@ -70,12 +70,12 @@ async def generate_sentences(request: GenerateRequest):
     prompt = request.prompt
     epitet = request.epitet
 
-    if prompt == "Жантик":
+    if prompt == "Бахредин":
         print("Ща будет мясо")
         openai_messages = [
             {
                 "role": "system",
-                "content": f"Сделай 2 издевательских смешных предложения со словами '{prompt}' и '{epitet}' на русском языке",
+                "content": f"Сделай одно издевательское смешное предложения со словами '{prompt}' и '{epitet}' на русском языке",
             },
             {
                 "role": "user",
@@ -92,7 +92,7 @@ async def generate_sentences(request: GenerateRequest):
         openai_messages = [
             {
                 "role": "system",
-                "content": f"Сделай 2 смешных предложения со словами '{prompt}' и '{epitet}' на русском языке",
+                "content": f"Сделай одно смешное предложение со словами '{prompt}' и '{epitet}' на русском языкеб, пиши грамотно, и не забывай про мужские и женские рода, и склонения. И если есть грамматические и стилистические ошибки - исправь их.",
             },
             {
                 "role": "user",

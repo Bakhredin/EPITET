@@ -1,12 +1,9 @@
-/* display: flex;
-  justify-content: center;
- 
- 
-  height: 100vh; */
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
-.body {
+.body.false{
   background-color: rgba(221, 255, 224, 0.32);
+}
+
+.body.true{
+  background-color: rgb(38,37,44);
 }
 
 .container {
@@ -15,7 +12,7 @@
   height: 100vh;
 }
 
-.text_epitet {
+.text_epitet.false {
   display: flex;
   width: 447px;
   height: 127px;
@@ -25,6 +22,19 @@
   font-size: 128px;
   line-height: 155px;
   color: #000000;
+  backdrop-filter: blur(2px);
+}
+
+.text_epitet.true {
+  display: flex;
+  width: 447px;
+  height: 127px;
+  margin: 233px auto 0;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 128px;
+  line-height: 155px;
+  color: #ffffff;
   backdrop-filter: blur(2px);
 }
 
@@ -44,7 +54,8 @@
   cursor: pointer;
 }
 
-.input {
+
+.input.false {
   display: flex;
   /* background-color: #D9D9D9; */
   background: rgba(98, 255, 0, 0.35);
@@ -57,6 +68,20 @@
   text-align: center
 }
 
+.input.true {
+  display: flex;
+  /* background-color: #D9D9D9; */
+  background: rgba(204, 0, 255, 0.50);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  width: 577px;
+  height: 45px;
+  border: 1px solid #000;
+  font-size: x-large;
+  font-family: 'Comfortaa', cursive;
+  text-align: center
+}
+
+
 .hide {
   opacity: 0;
   pointer-events: none;
@@ -66,7 +91,6 @@
 .show {
   opacity: 1;
 }
-
 
 .epitets-container {
   display: flex;
@@ -81,13 +105,6 @@
   align-items: center;
 }
 
-
-/* .epitet-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  } */
-
 .epitet-list {
   display: flex;
   flex-wrap: wrap;
@@ -95,17 +112,23 @@
   cursor: pointer;
 }
 
-/* .epitets-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-  } */
-
-.epitets-container p {
+.epitets-container.false p {
   margin: 5px;
   padding: 12px 12px;
-  background-color: #D9D9D9;
+  background-color:  #D9D9D9;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 0px;
+  font-size: 16px;
+  color: #888;
+  text-transform: uppercase;
+  border: 1px solid #000;
+  border-width: 2px;
+}
+
+.epitets-container.true p {
+  margin: 5px;
+  padding: 12px 12px;
+  background-color:  rgba(0, 0, 0, 0.25);;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border-radius: 0px;
   font-size: 16px;
@@ -121,10 +144,15 @@
   transition: background-color 0.3s ease;
 }
 
-
-
-.epitets-container div.active {
+.epitets-container.false div.active {
   background-color: rgba(98, 255, 0, 0.35);
+  /* Установите желаемый цвет фона для активного эпитета */
+  color: #ffffff;
+  /* Установите желаемый цвет текста для активного эпитета */
+}
+
+.epitets-container.true div.active {
+  background-color: rgba(204, 0, 255, 0.50);
   /* Установите желаемый цвет фона для активного эпитета */
   color: #ffffff;
   /* Установите желаемый цвет текста для активного эпитета */
@@ -143,3 +171,4 @@
 .button {
   border: solid black;
 }
+

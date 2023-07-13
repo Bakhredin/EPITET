@@ -76,25 +76,30 @@ function Page() {
   };
 
   return (
-    <div className='body'>
+    <div className={`body ${isLampOn ? 'true' : 'false'}`}>
       <Switch_joke
-      lamp={isLampOn}
+      isLampOn={isLampOn}
+      setIsLampOn={setIsLampOn}
       />
-       <CursorFollower/>
+       <CursorFollower
+       isLampOn={isLampOn}
+       setIsLampOn={setIsLampOn}
+       />
       <div className='container'>
-        <div className='text_epitet'>
+        <div className={`text_epitet ${isLampOn ? 'true' : 'false'}`}>
           <p id='p_epitet' onClick={toggleInput}>EPITET</p>
         </div>
-        <div className={`search ${show ? 'show' : 'hide'}`}>
+        <div className={`search ${show ? 'show' : 'hide'} ${isLampOn ? 'true' : 'false'}`}>
           <input
             onChange={handleInputChange}
             onKeyPress={handleKeyPress}
             placeholder='Введите слово'
-            className='input'
+            className={`input ${isLampOn ? 'true' : 'false'}`}
             type='text'
           />
+
         </div>
-        <div className='epitets-container'>
+        <div className={`epitets-container ${isLampOn ? 'true' : 'false'}`}>
           {isLoading ? (
             <p>Загрузка...</p>
           ) : (
@@ -126,7 +131,9 @@ function Page() {
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
         selectedContainerIndex={selectedContainerIndex}
-        inputValue={inputValue} />
+        inputValue={inputValue} 
+        isLampOn={isLampOn}
+        />
     </div>
   );
 };

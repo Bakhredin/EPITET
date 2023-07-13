@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './cursorfollower.css';
 
-const CursorFollower = () => {
+const CursorFollower = (isLampOn, setIsLampOn) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [followerPosition, setFollowerPosition] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
@@ -56,9 +56,9 @@ const CursorFollower = () => {
   return (
     <div className="cursor-follower" style={cursorStyle}>
       <img
-        src="./bee.png"
+        src={isLampOn.isLampOn ? 'firefly.png' : 'bee.png'}
         alt="Cursor Follower"
-        className="cursor-image"
+        className={`cursor-image ${isLampOn.isLampOn ? 'true' : 'false'}`}
       />
     </div>
   );
