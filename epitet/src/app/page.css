@@ -83,8 +83,7 @@
 
 
 .hide {
-  opacity: 0;
-  pointer-events: none;
+  opacity: 1;
   /* Чтобы скрыть input и отключить взаимодействие с ним */
 }
 
