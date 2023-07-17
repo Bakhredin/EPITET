@@ -28,6 +28,7 @@ class MessageRequest(BaseModel):
 class GenerateRequest(BaseModel):
     prompt: str
     epitet: str
+    mode: bool
 
 
 @app.post("/message")
@@ -69,13 +70,13 @@ async def process_message(request: MessageRequest):
 async def generate_sentences(request: GenerateRequest):
     prompt = request.prompt
     epitet = request.epitet
+    mode = request.mode
 
-    if prompt == "Бахредин":
-        print("Ща будет мясо")
+    if mode:
         openai_messages = [
             {
                 "role": "system",
-                "content": f"Сделай одно издевательское смешное предложения со словами '{prompt}' и '{epitet}' на русском языке",
+                "content": f"Сделай одно обычное предложение со словами '{prompt}' и '{epitet}' на русском языке, пиши грамотно, и не забывай про мужские и женские рода, и склонения. И исправь грамматические и стиллистические ошибки.",
             },
             {
                 "role": "user",
@@ -87,12 +88,10 @@ async def generate_sentences(request: GenerateRequest):
             },
         ]
     else:
-        print(prompt)
-        print(epitet)
         openai_messages = [
             {
                 "role": "system",
-                "content": f"Сделай одно смешное предложение со словами '{prompt}' и '{epitet}' на русском языкеб, пиши грамотно, и не забывай про мужские и женские рода, и склонения. И если есть грамматические и стилистические ошибки - исправь их.",
+                "content": f"Сделай одно издевательское смешное предложение со словами '{prompt}' и '{epitet}' на русском языке. И исправь грамматические и стиллистические ошибки.",
             },
             {
                 "role": "user",
@@ -109,10 +108,15 @@ async def generate_sentences(request: GenerateRequest):
     )
 
     assistant_message = response.choices[0].message.content.strip()
-    print(assistant_message)
     sentences = assistant_message.split("\n")
     sentences = [sentence.strip() for sentence in sentences if sentence.strip()]
     return {"sentences": sentences}
+
+
+@app.post("/joke")
+async def generate_joke(request: GenerateRequest):
+    request.mode = False
+    return await generate_sentences(request)
 
 
 @app.get("/")

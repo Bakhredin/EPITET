@@ -1,11 +1,12 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './page.css';
 import Modal from './components/modal/Modal.jsx'
 import CursorFollower from './components/modal/CursorFollower.jsx';
 import Switch_joke from './components/modal/Switch_joke'
+import Mode_switch from './components/modal/Mode_switch';
 
 function Page() {
   const [show, setShow] = useState(false);
@@ -15,6 +16,12 @@ function Page() {
   const [selectedContainerIndex, setSelectedContainerIndex] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [isLampOn, setIsLampOn] = useState(false);
+  const [isNormal, setIsNormal] = useState(true);
+
+  useEffect(() => {
+    console.log(isNormal);
+  }, [isNormal]
+  )
 
 
   const openModal = () => {
@@ -78,13 +85,21 @@ function Page() {
   return (
     <div className={`body ${isLampOn ? 'true' : 'false'}`}>
       <Switch_joke
-      isLampOn={isLampOn}
-      setIsLampOn={setIsLampOn}
+        isLampOn={isLampOn}
+        setIsLampOn={setIsLampOn}
       />
-       <CursorFollower
-       isLampOn={isLampOn}
-       setIsLampOn={setIsLampOn}
-       />
+
+      <Mode_switch
+        isNormal={isNormal}
+        setIsNormal={setIsNormal}
+      />
+
+
+      <CursorFollower
+        isLampOn={isLampOn}
+        setIsLampOn={setIsLampOn}
+      />
+
       <div className='container'>
         <div className={`text_epitet ${isLampOn ? 'true' : 'false'}`}>
           <p id='p_epitet' onClick={toggleInput}>EPITET</p>
@@ -131,9 +146,10 @@ function Page() {
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
         selectedContainerIndex={selectedContainerIndex}
-        inputValue={inputValue} 
+        inputValue={inputValue}
         isLampOn={isLampOn}
-        />
+        isNormal={isNormal}
+      />
     </div>
   );
 };

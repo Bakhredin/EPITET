@@ -11,9 +11,8 @@ function Switch_joke({ isLampOn, setIsLampOn }) {
 
   return (
     <div id="lamp" className={isLampOn ? "lamp-on" : ""}>
-
       <input type="checkbox" id="switch" name="switch" />
-      <label for="switch" class="switch"></label>
+      <label htmlFor="switch" className="switch"></label>
       <input
         type="radio"
         className="switch-on"
@@ -22,10 +21,10 @@ function Switch_joke({ isLampOn, setIsLampOn }) {
         checked={isLampOn}
         onChange={handleSwitchChange}
       />
-      
+
       <input
         type="radio"
-        class="switch-off"
+        className="switch-off"
         name="switch"
         value="off"
         checked={!isLampOn}
@@ -35,7 +34,6 @@ function Switch_joke({ isLampOn, setIsLampOn }) {
       <div className={`lamp ${isLampOn ? 'on' : 'off'}`}>
         <div className="gonna-give-light"></div>
       </div>
-      <div className="dark_light"><p>dark/light -дизайн еще не закончен</p></div>
     </div>
   );
 
