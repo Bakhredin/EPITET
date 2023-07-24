@@ -11,9 +11,13 @@ function ModeSwitch({ isNormal, setIsNormal }) {
   return (
     <div className="menu-wrap">
       <input type="checkbox" className="toggler" />
-      <div className="hamburger">
-        <div></div>
-      </div>
+      <label className="hamburger" htmlFor="menu-toggle">
+        <img
+          className={`hamburger-image ${isNormal ? 'true' : 'false'}`}
+          src={isNormal ? 'smile.png' : 'clown.png'}
+          alt=""
+        />
+      </label>
       <div className="menu">
         <div>
           <div>
@@ -23,7 +27,7 @@ function ModeSwitch({ isNormal, setIsNormal }) {
                   className="photo_joke"
                   onClick={() => handleSwitchMode(false)}
                 >
-                  <img src="./clown.png" alt="" />
+                  <img src="./clown_mem.png" alt="" />
                   <div className="text_joke">
                     <a id="text">Шуточная версия</a>
                   </div>
@@ -34,7 +38,7 @@ function ModeSwitch({ isNormal, setIsNormal }) {
                   className="photo_normal"
                   onClick={() => handleSwitchMode(true)}
                 >
-                  <img src="./normal.png" alt="" />
+                  <img src="./smile_mem.png" alt="" />
                   <div className="text_normal">
                     <a id="text">Нормальная версия</a>
                   </div>
@@ -46,6 +50,7 @@ function ModeSwitch({ isNormal, setIsNormal }) {
       </div>
     </div>
   );
+
 }
 
 export default ModeSwitch;
