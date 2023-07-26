@@ -19,8 +19,9 @@ function Page() {
   const [isNormal, setIsNormal] = useState(true);
   const [isQuotes, setIsQuotes] = useState(false);
   const [generatedQuotes, setGeneratedQuotes] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0); // Индекс текущего элемента для плавного появления эпитетов
-  const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0); // Индекс текущего элемента для плавного появления цитат
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
+  const [warningMessage, setWarningMessage] = useState(null);
   const MAX_WORDS_IN_QUOTE = 2;
   const MAX_WORDS_IN_MESSAGE = 1;
 
@@ -30,6 +31,7 @@ function Page() {
 
   const Quotes = () => {
     setIsQuotes(!isQuotes);
+    setWarningMessage(null); // Clear the warning message when switching between quotes and epithets
     console.log(isQuotes);
   };
 
@@ -42,14 +44,16 @@ function Page() {
   };
 
   const handleInputChange = (event) => {
-    const inputValue = event.target.value.trim(); // Remove leading/trailing whitespace
-    const words = inputValue.split(/\s+/); // Split the input value by whitespace
+    const inputValue = event.target.value.trim();
+    const words = inputValue.split(/\s+/);
 
-    // Check the field type and set the appropriate maximum word limit
     const maxWords = isQuotes ? MAX_WORDS_IN_QUOTE : MAX_WORDS_IN_MESSAGE;
 
     if (words.length <= maxWords) {
-      setInputValue(inputValue); // Update the input value if the word limit is not exceeded
+      setInputValue(inputValue);
+      setWarningMessage(null); // Clear the warning message if the input is valid
+    } else {
+      setWarningMessage(`Please enter ${maxWords} ${isQuotes ? 'words' : 'word'} in the input.`);
     }
   };
 
@@ -57,14 +61,14 @@ function Page() {
     // Validation for empty or too short inputs
     const words = inputValue.split(/\s+/);
     const maxWords = isQuotes ? MAX_WORDS_IN_QUOTE : MAX_WORDS_IN_MESSAGE;
-
+  
     if (words.length === 0 || words.length > maxWords) {
-      alert(`Please enter ${isQuotes ? 'two words' : 'one word'} in the input.`);
-      return;
+      setWarningMessage(`Please enter ${maxWords} ${isQuotes ? 'words' : 'word'} in the input.`);
+      return; // Return early if the input is invalid
     }
-
+  
     setIsLoading(true);
-
+  
     if (isQuotes) {
       axios
         .post('http://localhost:8000/quotes', {
@@ -72,14 +76,14 @@ function Page() {
         })
         .then((response) => {
           console.log(response.data);
-          setGeneratedQuotes(response.data.quotes); // Update the state with the generated quotes
+          setGeneratedQuotes(response.data.quotes);
         })
         .catch((error) => {
           console.error(error);
         })
         .finally(() => {
-          setCurrentQuoteIndex(0); // Обнуляем текущий индекс для цитат перед каждой загрузкой
-          setIsLoading(false); // Set isLoading to false after the quotes timer is finished
+          setCurrentQuoteIndex(0);
+          setIsLoading(false);
         });
     } else {
       axios
@@ -98,11 +102,12 @@ function Page() {
           console.error(error);
         })
         .finally(() => {
-          setCurrentIndex(0); // Обнуляем текущий индекс для эпитетов перед каждой загрузкой
-          setIsLoading(false); // Set isLoading to false after the epithets timer is finished
+          setCurrentIndex(0);
+          setIsLoading(false);
         });
     }
   };
+  
 
   const handleClick = (index) => {
     const selectedElement = epithetsData[index];
@@ -126,33 +131,27 @@ function Page() {
     }
   };
 
-  // Таймер для появления элементов массива epithetsData
   useEffect(() => {
     const epithetsTimer = setInterval(() => {
       setCurrentIndex((prevIndex) => prevIndex + 1);
-    }, 700); // Пауза между появлением элементов - 1 секунда (1000 мс)
+    }, 700);
 
-    // Останавливаем таймер для epithetsData, если достигли последнего элемента
     if (currentIndex >= epithetsData.length - 1) {
       clearInterval(epithetsTimer);
     }
 
-    // Очистка таймера при размонтировании компонента
     return () => clearInterval(epithetsTimer);
   }, [currentIndex, epithetsData.length]);
 
-  // Таймер для появления элементов массива generatedQuotes
   useEffect(() => {
     const quotesTimer = setInterval(() => {
       setCurrentQuoteIndex((prevIndex) => prevIndex + 1);
-    }, 1000); // Пауза между появлением элементов - 1 секунда (1000 мс)
+    }, 1000);
 
-    // Останавливаем таймер для generatedQuotes, если достигли последнего элемента
     if (currentQuoteIndex >= generatedQuotes.length - 1) {
       clearInterval(quotesTimer);
     }
 
-    // Очистка таймера при размонтировании компонента
     return () => clearInterval(quotesTimer);
   }, [currentQuoteIndex, generatedQuotes.length]);
 
@@ -162,10 +161,19 @@ function Page() {
       <Mode_switch isNormal={isNormal} setIsNormal={setIsNormal} />
       <CursorFollower isLampOn={isLampOn} setIsLampOn={setIsLampOn} />
       <div className='container'>
-        <div className={`text_epitet ${isLampOn ? 'true' : 'false'} ${isQuotes ? 'qu' : 'ep'}`} onClick={Quotes}>
-          <p id='p_epitet' onClick={toggleInput}>{isQuotes ? 'QUOTES' : 'EPITET'}</p>
+        <div
+          className={`text_epitet ${
+            isLampOn ? 'true' : 'false'
+          } ${isQuotes ? 'qu' : 'ep'}`}
+          onClick={Quotes}
+        >
+          <p id='p_epitet' onClick={toggleInput}>
+            {isQuotes ? 'QUOTES' : 'EPITET'}
+          </p>
         </div>
-        <div className={`search ${show ? 'show' : 'hide'} ${isLampOn ? 'true' : 'false'}`}>
+        <div
+          className={`search ${show ? 'show' : 'hide'} ${isLampOn ? 'true' : 'false'}`}
+        >
           <input
             onChange={handleInputChange}
             onKeyPress={handleKeyPress}
@@ -173,6 +181,11 @@ function Page() {
             className={`input ${isLampOn ? 'true' : 'false'}`}
             type='text'
           />
+          {warningMessage && (
+            <p className={`warning-message ${isLoading ? 'loading' : ''}`}>
+              {warningMessage}
+            </p>
+          )}
         </div>
         <div className={`epitets-container ${isLampOn ? 'true' : 'false'}`}>
           {isLoading ? (
@@ -180,11 +193,13 @@ function Page() {
           ) : isQuotes ? (
             <div>
               {generatedQuotes.slice(0, currentQuoteIndex + 1).map((quote, index) => (
-                <p key={index} className={`generated-quote animated-item`}>{quote}</p>
+                <p key={index} className={`generated-quote animated-item`}>
+                  {quote}
+                </p>
               ))}
             </div>
           ) : (
-            <div className="epitet-list">
+            <div className='epitet-list'>
               {epithetsData.slice(0, currentIndex + 1).map((epitetData, index) => (
                 <div
                   className={`epitet-item ${selectedContainerIndex === index ? 'active' : ''}`}
@@ -194,13 +209,13 @@ function Page() {
                 >
                   {epitetData.isActive ? (
                     <div
-                      className="epitet-container active"
+                      className='epitet-container active'
                       style={{ backgroundColor: epitetData.color }}
                     >
-                      <p className="animated-item">{epitetData.epitet}</p>
+                      <p className='animated-item'>{epitetData.epitet}</p>
                     </div>
                   ) : (
-                    <p className="animated-item">{epitetData.epitet}</p>
+                    <p className='animated-item'>{epitetData.epitet}</p>
                   )}
                 </div>
               ))}

@@ -1,12 +1,12 @@
-.body.false{
+.body.false {
   background-color: rgba(221, 255, 224, 0.32);
   overflow-x: hidden;
   -webkit-transition: all 300ms linear;
   transition: all 300ms linear;
 }
 
-.body.true{
-  background-color: rgb(38,37,44);
+.body.true {
+  background-color: rgb(38, 37, 44);
   overflow-x: hidden;
   -webkit-transition: all 300ms linear;
   transition: all 300ms linear;
@@ -28,7 +28,7 @@
   font-size: 128px;
   line-height: 155px;
   color: #000000;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(0px);
 }
 
 .text_epitet.ep.true {
@@ -41,7 +41,7 @@
   font-size: 128px;
   line-height: 155px;
   color: #ffffff;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(0px);
 }
 
 .text_epitet.qu.false {
@@ -54,7 +54,7 @@
   font-size: 128px;
   line-height: 155px;
   color: #000000;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(0px);
 }
 
 .text_epitet.qu.true {
@@ -67,7 +67,7 @@
   font-size: 128px;
   line-height: 155px;
   color: #ffffff;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(0px);
 }
 
 .search {
@@ -79,7 +79,6 @@
   transform: translateX(-50%);
   opacity: 1;
   transition: opacity 0.3s ease;
-  background: #D9D9D9;
 }
 
 #p_epitet {
@@ -134,7 +133,7 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  
+
 
 }
 
@@ -162,7 +161,7 @@
 .epitets-container.false p {
   margin: 5px;
   padding: 12px 12px;
-  background-color:  #D9D9D9;
+  background-color: #D9D9D9;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border-radius: 0px;
   font-size: 16px;
@@ -175,11 +174,11 @@
 .epitets-container.true p {
   margin: 5px;
   padding: 12px 12px;
-  background-color:  rgba(0, 0, 0, 0.25);;
+  background-color: rgba(0, 0, 0, 0.25);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border-radius: 0px;
   font-size: 16px;
-  color: #888; 
+  color: #888;
   text-transform: uppercase;
   border: 1px solid #000;
   border-width: 2px;
@@ -187,7 +186,8 @@
 
 .fadeIn {
   opacity: 0;
-  transition: opacity 0.3s ease; /* Плавный переход для opacity */
+  transition: opacity 0.3s ease;
+  /* Плавный переход для opacity */
 }
 
 .fadeIn.active {
@@ -234,16 +234,103 @@
 /* Добавим CSS-анимацию для плавного появления элементов */
 @keyframes fadeInOut {
   0% {
-    transform: scale(0.5); /* Начальное значение - уменьшенный размер элемента */
-    opacity: 0; /* Начальное значение - элемент невидим */
+    transform: scale(0.5);
+    /* Начальное значение - уменьшенный размер элемента */
+    opacity: 0;
+    /* Начальное значение - элемент невидим */
   }
+
   100% {
-    transform: scale(1); /* Конечное значение - обычный размер элемента */
-    opacity: 1; /* Конечное значение - элемент полностью видим */
+    transform: scale(1);
+    /* Конечное значение - обычный размер элемента */
+    opacity: 1;
+    /* Конечное значение - элемент полностью видим */
   }
 }
 
 /* Применим анимацию к элементам, которые должны появляться плавно */
 .animated-item {
-  animation: fadeInOut 0.5s ease-in-out; /* Применим анимацию с продолжительностью 0.5 секунды */
+  animation: fadeInOut 0.5s ease-in-out;
+  /* Применим анимацию с продолжительностью 0.5 секунды */
 }
+
+/* Add this CSS in a new or existing CSS file */
+.warning-message {
+  color: red;
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(98, 255, 0, 0.35);
+  /* Use the same background color as the loading message */
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  width: 577px;
+  height: 45px;
+  border: 1px solid #000;
+  font-size: x-large;
+  font-family: 'Comfortaa', cursive;
+  text-align: center;
+  opacity: 0.9;
+  /* Adjust opacity to your preference */
+  position: absolute;
+  top: 400px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.warning-message.loading {
+  /* Apply the loading message styles if isLoading is true */
+  background-color: rgb(38, 37, 44);
+  color: #ffffff;
+  cursor: default;
+  pointer-events: none;
+}
+
+
+/* Add a media query for iPhone 13 and similar devices */
+@media (max-width: 428px) {
+
+  .text_epitet.ep.false,
+  .text_epitet.ep.true,
+  .text_epitet.qu.false,
+  .text_epitet.qu.true {
+    display: flex;
+    font-size: 80px;
+    line-height: 550px;
+    margin-top: 30px;
+    justify-content: center;
+    backdrop-filter: blur(0px); /* Применяем эффект backdrop-filter для мобильных устройств */
+  }
+
+  .input.false,
+  .input.true{
+    display: flex;
+    width: 60%;
+    max-width: 400px;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    position: relative;
+    top: -35px; /* Adjust the value as needed */
+  }
+
+  .epitets-container {
+    padding: 5px;
+    
+  }
+
+  .epitets-container p,
+  .epitets-container.false p, 
+  .epitets-container.true p {
+    padding: 10px 10px;
+    font-size: 13px;
+    border: solid black 1px;
+    position: relative;
+    top: -60px; /* Adjust the value as needed */
+  }
+
+ 
+}
+

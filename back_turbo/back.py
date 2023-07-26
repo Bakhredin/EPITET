@@ -33,7 +33,8 @@ class GenerateRequest(BaseModel):
 
 @app.post("/message")
 async def process_message(request: MessageRequest):
-    prompt = request.message.split()[0]
+    # prompt = request.message.split()[0]
+    prompt = request.message
     print(prompt)
     if prompt == "Бахредин":
         prompt = "тупой"
@@ -122,6 +123,42 @@ async def generate_joke(request: GenerateRequest):
 @app.get("/")
 async def root():
     return {"message": "Welcome to the Chat API!"}
+
+
+class QuoteRequest(BaseModel):
+    prompt: str
+
+
+@app.post("/quotes")
+async def generate_quotes(quote_request: QuoteRequest):
+    prompt_text = f"напиши 3 цитаты на со словом '{quote_request.prompt}', следуя этим правилам: 1) пиши только цитату и автора. 2) Не пиши ничего кроме цитаты, и автора, если что-то не так, просто отсправь слово 'Ошибка!' 3)  Если нет надежных источников, содержащих цитаты со словом или слово не существует, то напиши 'в пиши нормально'"
+
+    print(quote_request.prompt)
+
+    openai_messages = [
+        {
+            "role": "user",
+            "content": prompt_text,
+        },
+    ]
+
+    response = openai.ChatCompletion.create(
+        model=openai_model, messages=openai_messages, temperature=0.0
+    )
+
+    assistant_messages = response["choices"][0]["message"]["content"].split("\n")
+    quotes = [
+        msg.split(" ", 1)[1].strip() if " " in msg else msg
+        for msg in assistant_messages
+        if msg.strip() and "'" not in msg
+    ]
+
+    # Filter out sentences containing numbers
+    filtered_quotes = [
+        quote for quote in quotes if not any(char.isdigit() for char in quote)
+    ]
+
+    return {"quotes": filtered_quotes[:3]}
 
 
 if __name__ == "__main__":

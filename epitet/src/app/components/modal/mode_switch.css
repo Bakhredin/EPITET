@@ -267,3 +267,75 @@ body {
     max-height: 60px;
   }
   
+/* Existing CSS code */
+
+@media (max-width: 428px) {
+  /* Add your responsive styles here for devices with a maximum width of 428px */
+
+  #lamp {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .dark_light {
+    display: flex;
+    flex: 1;
+    text-align: center;
+    margin-left: 1rem; /* Adjust the left margin for the .dark_light class */
+    /* Add other responsive styles as needed */
+  }
+
+  input[name="switch"],
+  input[name="switch"] + label {
+    position: absolute;
+    bottom: 3rem; /* Adjust the bottom position for the switch */
+    width: 4rem;
+    height: 4rem;
+  }
+
+  input[name="switch"] + label {
+    right: 2rem; /* Adjust the right position for the switch label */
+  }
+
+  .lamp {
+    position: relative;
+    margin: 0 auto;
+    width: 0.7rem;
+    height: 4.3rem; /* Adjust the height of the lamp for mobile devices */
+    background-image: linear-gradient(
+        rgba(0, 0, 0, 0.7),
+        rgba(0, 0, 0, 0.7)
+      ),
+      linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+      linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+    background-repeat: no-repeat;
+    background-size: 0.15rem 3rem, 0.4rem 0.8rem, 0.7rem 1rem;
+    background-position: 50% 0, 0.19rem 3rem, 0 3.3rem; /* Adjust the background positions */
+  }
+
+  .lamp:before {
+    left: -0.69rem; /* Adjust the left position for the lamp:before */
+    bottom: -2rem; /* Adjust the bottom position for the lamp:before */
+    width: 2rem; /* Adjust the width for the lamp:before */
+    height: 2rem; /* Adjust the height for the lamp:before */
+    /* Rest of the styles for the lamp:before */
+  }
+
+  .gonna-give-light {
+    top: 4.4rem; /* Adjust the top position for .gonna-give-light */
+    left: 0.24rem; /* Adjust the left position for .gonna-give-light */
+    width: 0; /* Adjust the width for .gonna-give-light */
+    height: 0.75rem; /* Adjust the height for .gonna-give-light */
+    /* Rest of the styles for .gonna-give-light */
+  }
+
+  .gonna-give-light:before {
+    top: 0.75rem; /* Adjust the top position for .gonna-give-light:before */
+    left: -0.175rem; /* Adjust the left position for .gonna-give-light:before */
+    width: 0.45rem; /* Adjust the width for .gonna-give-light:before */
+    height: 0.45rem; /* Adjust the height for .gonna-give-light:before */
+    /* Rest of the styles for .gonna-give-light:before */
+  }
+}
