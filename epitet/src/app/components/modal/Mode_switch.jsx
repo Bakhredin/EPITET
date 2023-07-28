@@ -25,7 +25,7 @@ function ModeSwitch({ isNormal, setIsNormal }) {
       </label>
       <div className="menu">
         <div>
-          <div>
+          <div className="line">
             <ul>
               <li>
                 <div className="photo_joke" onClick={() => handleSwitchMode(false)}>

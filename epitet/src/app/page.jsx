@@ -7,6 +7,7 @@ import Modal from './components/modal/Modal.jsx';
 import CursorFollower from './components/modal/CursorFollower.jsx';
 import Switch_joke from './components/modal/Switch_joke';
 import Mode_switch from './components/modal/Mode_switch';
+import Fox_button from './components/modal/Fox_button';
 
 function Page() {
   const [show, setShow] = useState(false);
@@ -61,14 +62,14 @@ function Page() {
     // Validation for empty or too short inputs
     const words = inputValue.split(/\s+/);
     const maxWords = isQuotes ? MAX_WORDS_IN_QUOTE : MAX_WORDS_IN_MESSAGE;
-  
+
     if (words.length === 0 || words.length > maxWords) {
       setWarningMessage(`Please enter ${maxWords} ${isQuotes ? 'words' : 'word'} in the input.`);
       return; // Return early if the input is invalid
     }
-  
+
     setIsLoading(true);
-  
+
     if (isQuotes) {
       axios
         .post('http://localhost:8000/quotes', {
@@ -107,7 +108,7 @@ function Page() {
         });
     }
   };
-  
+
 
   const handleClick = (index) => {
     const selectedElement = epithetsData[index];
@@ -157,14 +158,17 @@ function Page() {
 
   return (
     <div className={`body ${isLampOn ? 'true' : 'false'}`}>
+      <div className="header">
+        <Mode_switch isNormal={isNormal} setIsNormal={setIsNormal} />
+        <Fox_button isLampOn={isLampOn} setIsLampOn={setIsLampOn} />
+      </div>
       <Switch_joke isLampOn={isLampOn} setIsLampOn={setIsLampOn} />
-      <Mode_switch isNormal={isNormal} setIsNormal={setIsNormal} />
+
       <CursorFollower isLampOn={isLampOn} setIsLampOn={setIsLampOn} />
       <div className='container'>
         <div
-          className={`text_epitet ${
-            isLampOn ? 'true' : 'false'
-          } ${isQuotes ? 'qu' : 'ep'}`}
+          className={`text_epitet ${isLampOn ? 'true' : 'false'
+            } ${isQuotes ? 'qu' : 'ep'}`}
           onClick={Quotes}
         >
           <p id='p_epitet' onClick={toggleInput}>
