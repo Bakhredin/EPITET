@@ -58,7 +58,7 @@ function Page() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Validation for empty or too short inputs
     const words = inputValue.split(/\s+/);
     const maxWords = isQuotes ? MAX_WORDS_IN_QUOTE : MAX_WORDS_IN_MESSAGE;
@@ -70,45 +70,35 @@ function Page() {
 
     setIsLoading(true);
 
-    if (isQuotes) {
-      axios
-        .post('http://localhost:8000/quotes', {
+    try {
+      if (isQuotes) {
+        const response = await axios.post('http://localhost:8000/quotes', {
           prompt: inputValue,
-        })
-        .then((response) => {
-          console.log(response.data);
-          setGeneratedQuotes(response.data.quotes);
-        })
-        .catch((error) => {
-          console.error(error);
-        })
-        .finally(() => {
-          setCurrentQuoteIndex(0);
-          setIsLoading(false);
         });
-    } else {
-      axios
-        .post('http://localhost:8000/message', {
+        console.log(response.data);
+        setGeneratedQuotes(response.data.quotes);
+      } else {
+        const response = await axios.post('http://localhost:8000/message', {
           message: inputValue,
-        })
-        .then((response) => {
-          console.log(response.data);
-          const updatedEpithetsData = response.data.epithets.map((epitet) => ({
-            epitet,
-            isActive: false,
-          }));
-          setEpithetsData(updatedEpithetsData);
-        })
-        .catch((error) => {
-          console.error(error);
-        })
-        .finally(() => {
-          setCurrentIndex(0);
-          setIsLoading(false);
         });
+        console.log(response.data);
+        const updatedEpithetsData = response.data.epithets.map((epitet) => ({
+          epitet,
+          isActive: false,
+        }));
+        setEpithetsData(updatedEpithetsData);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      if (isQuotes) {
+        setCurrentQuoteIndex(0);
+      } else {
+        setCurrentIndex(0);
+      }
+      setIsLoading(false);
     }
   };
-
 
   const handleClick = (index) => {
     const selectedElement = epithetsData[index];
