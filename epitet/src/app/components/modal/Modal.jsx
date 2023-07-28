@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from 'axios';
 import './modal.css';
 
-function Modal({ visible, onClose, selectedContainerIndex, inputValue, isLampOn }) {
+function Modal({ visible, onClose, selectedContainerIndex, inputValue, isLampOn, isNormal }) {
   const modalRef = useRef(null);
   const [sentences, setSentences] = useState([]);
 
@@ -13,7 +13,8 @@ function Modal({ visible, onClose, selectedContainerIndex, inputValue, isLampOn 
     try {
       const response = await axios.post('http://localhost:8000/generate', {
         prompt: inputValue,
-        epitet: epitet
+        epitet: epitet,
+        mode: isNormal
       });
       setSentences(response.data.sentences);
       console.log(response.data.sentences);
@@ -32,7 +33,7 @@ function Modal({ visible, onClose, selectedContainerIndex, inputValue, isLampOn 
   const handleModalClose = () => {
     onClose();
   };
-
+  
   const positionModal = () => {
     const containerElement = document.getElementsByClassName('epitet-item')[selectedContainerIndex];
     const containerRect = containerElement.getBoundingClientRect();
@@ -55,7 +56,6 @@ function Modal({ visible, onClose, selectedContainerIndex, inputValue, isLampOn 
             {sentences.map((sentence, index) => <p key={index}>{sentence}</p>)}
             </button>
           </div>
-
           <div className="meaning">
             <button onClick={handleCreateSentence} className={`epitets_button ${isLampOn ? 'true' : 'false'}`}>новое предложение</button>
           </div>

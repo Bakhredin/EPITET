@@ -124,7 +124,8 @@
 }
 
 
-.x{
+
+.x {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -135,11 +136,45 @@
   cursor: pointer;
   color: #888;
   transition: background-color 0.3s ease;
+  
+  /* Add the following properties to position the "x" in the top-right corner */
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .x:hover {
   background-color: #d7d3d3;
   color:#888;
   transition: background-color 0.3s ease;
+}
+
+/* Styles for screens with width 428px or less */
+@media (max-width: 428px) {
+  .modal.false, .modal.true {
+    width: 285px;
+    height: 285px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .modal-actions {
+    margin-top: 5px;
+  }
+
+  .create_button.false, .create_button.true,
+  .epitets_button.false, .epitets_button.true {
+    font-size: 14px;
+    padding: 10px 10px;
+  }
+
+  .x {
+    /* Position the "x" button in the top-right corner with a smaller size */
+    width: 12px;
+    height: 12px;
+    font-size: 12px;
+    top: 5px;
+    right: 5px;
+  }
 }
 
