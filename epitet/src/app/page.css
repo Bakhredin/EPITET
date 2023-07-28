@@ -330,6 +330,7 @@ body{
     justify-content: center;
     align-items: center;
     margin: 0 auto;
+    font-family: 'Comfortaa', cursive;
     position: relative;
     top: -35px;
     /* Adjust the value as needed */
