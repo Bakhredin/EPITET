@@ -11,7 +11,7 @@ function Modal({ visible, onClose, selectedContainerIndex, inputValue, isLampOn,
     const epitet = document.getElementsByClassName('epitet-item')[selectedContainerIndex].textContent;
 
     try {
-      const response = await axios.post('http://localhost:8000/generate', {
+      const response = await axios.post('https://epitet-back.onrender.com/generate', {
         prompt: inputValue,
         epitet: epitet,
         mode: isNormal

@@ -72,13 +72,13 @@ function Page() {
 
     try {
       if (isQuotes) {
-        const response = await axios.post('http://localhost:8000/quotes', {
+        const response = await axios.post('https://epitet-back.onrender.com/quotes', {
           prompt: inputValue,
         });
         console.log(response.data);
         setGeneratedQuotes(response.data.quotes);
       } else {
-        const response = await axios.post('http://localhost:8000/message', {
+        const response = await axios.post('https://epitet-back.onrender.com/message', {
           message: inputValue,
         });
         console.log(response.data);
