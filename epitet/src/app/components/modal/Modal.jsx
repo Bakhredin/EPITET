@@ -5,12 +5,14 @@ import './modal.css';
 function Modal({ visible, onClose, selectedContainerIndex, inputValue, isLampOn, isNormal }) {
   const modalRef = useRef(null);
   const [sentences, setSentences] = useState([]);
+  const [loading, setLoading] = useState(false); // Add a loading state
 
   const handleCreateSentence = async () => {
     const prompt = inputValue;
     const epitet = document.getElementsByClassName('epitet-item')[selectedContainerIndex].textContent;
 
     try {
+      setLoading(true); // Set loading state to true before making the request
       const response = await axios.post('https://epitet-back.onrender.com/generate', {
         prompt: inputValue,
         epitet: epitet,
@@ -20,6 +22,8 @@ function Modal({ visible, onClose, selectedContainerIndex, inputValue, isLampOn,
       console.log(response.data.sentences);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false); // Set loading state to false after the request completes
     }
   };
 
@@ -53,7 +57,11 @@ function Modal({ visible, onClose, selectedContainerIndex, inputValue, isLampOn,
         <div className="modal-content">
           <div className="create">
             <button className={`create_button ${isLampOn ? 'true' : 'false'}`}>
-            {sentences.map((sentence, index) => <p key={index}>{sentence}</p>)}
+              {loading ? (
+                <p>Загрузка...</p> 
+              ) : (
+                sentences.map((sentence, index) => <p key={index}>{sentence}</p>)
+              )}
             </button>
           </div>
           <div className="meaning">
